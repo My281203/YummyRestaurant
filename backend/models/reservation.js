@@ -33,6 +33,22 @@ const reservationSchema = new mongoose.Schema({
     minLength: [11, "Phone number must contain 11 Digits."],
     maxLength: [11, "Phone number must contain 11 Digits."],
   },
+  status: {
+    type: String,
+    enum: ['pending', 'completed', 'cancelled'],
+    default: 'pending'
+  },
+  dishes: [{
+    dish: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Dish'
+    },
+    quantity: Number
+  }],
+  totalAmount: {
+    type: Number,
+    required: true
+  }
 });
 
 export const Reservation = mongoose.model("Reservation", reservationSchema);
