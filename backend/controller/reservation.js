@@ -2,7 +2,7 @@ import ErrorHandler from "../middlewares/error.js";
 import { Reservation } from "../models/reservation.js";
 
 
-const send_reservation = async (req, res, next) => {
+export const send_reservation = async (req, res, next) => {
   const { firstName, lastName, email, date, time, phone } = req.body;
   if (!firstName || !lastName || !email || !date || !time || !phone) {
     return next(new ErrorHandler("Please Fill Full Reservation Form!", 400));
@@ -25,7 +25,15 @@ const send_reservation = async (req, res, next) => {
     return next(error);
   }
 };
+export const list_reservation = async(req,res)=>{
+  try {
+    const reservations = await Reservation.find().select("");
+    res.status(200).json(reservations);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}
 
 
-export default send_reservation;
+
 
