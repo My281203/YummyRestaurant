@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const dishSchema = new mongoose.Schema({
+const menuSchema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
@@ -11,5 +11,5 @@ const dishSchema = new mongoose.Schema({
     updatedAt: { type: Date, default: Date.now },
 });
 
-const Dish = mongoose.model('Dish', dishSchema);
-export default Dish;
+const Menu = mongoose.model('Menu', menuSchema);
+export default Menu;
