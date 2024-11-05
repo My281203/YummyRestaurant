@@ -33,6 +33,22 @@ const reservationSchema = new mongoose.Schema({
     minLength: [11, "Phone number must contain 11 Digits."],
     maxLength: [11, "Phone number must contain 11 Digits."],
   },
+  tableNumber: {
+    type: Number,
+    required: true,
+    min: [1, "Table number must be at least 1."],
+  },
+  customerNumber: {
+    type: Number,
+    required: true,
+    min: [1, "There must be at least 1 customer."],
+  },
+  status: {
+    type: String,
+    enum: ["Completed", "Canceled", "Waiting"],
+    default: "Waiting",
+    required: true,
+  },
 });
 
 export const Reservation = mongoose.model("Reservation", reservationSchema);
