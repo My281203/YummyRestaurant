@@ -4,6 +4,7 @@ import cors from "cors";
 import { errorMiddleware } from "./middlewares/error.js";
 import reservationRouter from "./routes/reservationRoute.js";
 import { dbConnection } from "./database/dbConnection.js";
+import { update_status } from "./controller/reservation.js";
 
 const app = express();
 dotenv.config({ path: "./config.env" });
@@ -11,7 +12,7 @@ dotenv.config({ path: "./config.env" });
 app.use(
   cors({
     origin: [process.env.FRONTEND_URL],
-    methods: ["POST"],
+    methods: ["POST", "PUT"],
     credentials: true,
   })
 );
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/reservation", reservationRouter);
+
 app.get("/", (req, res, next)=>{return res.status(200).json({
   success: true,
   message: "HELLO WORLD AGAIN"
