@@ -9,7 +9,8 @@ export const send_reservation = async (req, res, next) => {
   }
 
   try {
-    await Reservation.create({
+    // Tạo mới một đặt bàn và lưu vào biến reservation
+    const reservation = await Reservation.create({
       firstName,
       lastName,
       email,
@@ -20,9 +21,12 @@ export const send_reservation = async (req, res, next) => {
       customerNumber,
       status: "Waiting"
     });
+    
+    // Trả về ID của đặt bàn vừa được tạo
     res.status(201).json({
       success: true,
       message: "Reservation Sent Successfully!",
+      reservationId: reservation._id // Lấy ID từ đối tượng reservation
     });
   } catch (error) {
     if (error.name === 'ValidationError') {
@@ -30,10 +34,10 @@ export const send_reservation = async (req, res, next) => {
       return next(new ErrorHandler(validationErrors.join(', '), 400));
     }
 
-    
     return next(error);
   }
 };
+
 
 export const update_status = async (req, res, next) => {
   const reservationId = req.params.id.trim();  
