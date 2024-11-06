@@ -1,0 +1,36 @@
+/* ... existing styles ... */
+
+.navLinks .auth-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.navLinks .auth-links a {
+  padding: 8px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.navLinks .auth-links a.login {
+  color: #333;
+  background-color: transparent;
+  border: 2px solid #333;
+}
+
+.navLinks .auth-links a.login:hover {
+  background-color: #333;
+  color: white;
+}
+
+.navLinks .auth-links a.register {
+  background-color: #ff4b2b;
+  color: white;
+  border: 2px solid #ff4b2b;
+}
+
+.navLinks .auth-links a.register:hover {
+  background-color: transparent;
+  color: #ff4b2b;
+} 
