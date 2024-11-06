@@ -5,12 +5,13 @@ const reservationSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
-    minLength: [2, "First name must be of at least 32haracters."],
+    minLength: [3, "First name must be of at least 3 Characters."],
+    maxLength: [30, "First name cannot exceed 30 Characters."],
   },
   lastName: {
     type: String,
     required: true,
-    minLength: [2, "Last name must be of at least 2 Characters."],
+    minLength: [3, "Last name must be of at least 3 Characters."],
     maxLength: [30, "Last name cannot exceed 30 Characters."],
   },
   date: {
@@ -29,25 +30,25 @@ const reservationSchema = new mongoose.Schema({
   phone: {
     type: String,
     required: true,
-    minLength: [10, "Phone number must contain 10 Digits."],
-    maxLength: [10, "Phone number must contain 10 Digits."],
-  },
-  tableNumber: {
-    type: Number,
-    required: true,
-    min: [1, "Table number must be at least 1."],
-  },
-  customerNumber: {
-    type: Number,
-    required: true,
-    min: [1, "There must be at least 1 customer."],
+    minLength: [11, "Phone number must contain 11 Digits."],
+    maxLength: [11, "Phone number must contain 11 Digits."],
   },
   status: {
     type: String,
-    enum: ["Completed", "Canceled", "Waiting"],
-    default: "Waiting",
-    required: true,
+    enum: ['pending', 'completed', 'cancelled'],
+    default: 'pending'
   },
+  dishes: [{
+    dish: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Dish'
+    },
+    quantity: Number
+  }],
+  totalAmount: {
+    type: Number,
+    required: true
+  }
 });
 
 export const Reservation = mongoose.model("Reservation", reservationSchema);
