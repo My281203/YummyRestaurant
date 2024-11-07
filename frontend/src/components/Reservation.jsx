@@ -5,14 +5,6 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-// Create axios instance with default config
-const api = axios.create({
-  baseURL: 'http://localhost:4000',
-  headers: {
-    'Content-Type': 'application/json'
-  }
-});
-
 const Reservation = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -25,19 +17,17 @@ const Reservation = () => {
   const handleReservation = async (e) => {
     e.preventDefault();
     try {
-      console.log('Sending data:', { firstName, lastName, email, phone, date, time });
-      
-      const response = await api.post('/reservation/send', {
-        firstName,
-        lastName,
-        email,
-        phone,
-        date,
-        time
-      });
-
-      console.log('Response:', response);
-      toast.success("Reservation successful!");
+      const { data } = await axios.post(
+        "http://localhost:4000/reservation/send",
+        { firstName, lastName, email, phone, date, time },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      toast.success(data.message);
       setFirstName("");
       setLastName("");
       setPhone(0);
@@ -46,13 +36,7 @@ const Reservation = () => {
       setDate("");
       navigate("/success");
     } catch (error) {
-      console.error('Error details:', {
-        message: error.message,
-        status: error?.response?.status,
-        data: error?.response?.data
-      });
-      
-      toast.error("Unable to connect to server. Please try again later.");
+      toast.error(error.response.data.message);
     }
   };
 
