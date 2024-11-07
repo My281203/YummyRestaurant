@@ -3,15 +3,16 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
-export const dbConnection = () => {
-  mongoose
-    .connect(process.env.MONGO_URI, {
+export const dbConnection = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
       dbName: "RESERVATIONS",
-    })
-    .then(() => {
-      console.log("Connected to database!");
-    })
-    .catch((err) => {
-      console.log(`Some error occured while connecing to database: ${err}`);
+      useNewUrlParser: true,
+      useUnifiedTopology: true
     });
+    console.log("Connected to database!");
+  } catch (err) {
+    console.error(`Error connecting to database: ${err}`);
+    process.exit(1); // Thoát ứng dụng nếu không thể kết nối
+  }
 };
